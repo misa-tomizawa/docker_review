@@ -5,19 +5,19 @@ services:
       context: ./php-apache
       dockerfile: Dockerfile
     ports:
-      - [ 1 ]:[ 2 ]
+      - "8888:80"
     volumes:
       - type: bind
-        source: [ 3 ]
-        target: "/etc/apache2/sites-enabled/000-default.conf"
+        source: ./php-apache/000-default.conf #自分のパソコンのどのファイルを同期するか
+        target: "/etc/apache2/sites-enabled/000-default.conf" #コンテナの中のどこに同期するか
       - type: bind
-        source: "./php-apache/app"
-        target: [ 4 ]
+        source: "./php-apache/app/public" #自分のパソコンのどのファイルを同期するか
+        target: /var/www/docker_review/public #コンテナの中のどこに同期するか
     depends_on:
       - review-mysql
 
   review-mysql:
-    image: [ 5 ]
+    image: mysql:8
     environment:
       - MYSQL_ROOT_PASSWORD=e2QNqCUd
       - MYSQL_DATABASE=docker_review
